@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label"> Wachtwoord</label>
-                    <input type="name" class="form-control" id="HerhaalWachtwoord">
+                    <input type="name" class="form-control" id="Wachtwoord">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Herhaal wachtwoord</label>
@@ -49,9 +49,13 @@
             </div>
             
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <label class="form-label">Thuis adres</label>
                     <input type="name" class="form-control" id="adres">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Postcode</label>
+                    <input type="name" class="form-control" id="Postcode">
                 </div>
             </div>
 
@@ -106,5 +110,50 @@
             </div>
           </form>
     </div>
+
+    <script>
+        //de submit knop
+        const knop = document.getElementById('btn1');
+
+        //lijst met errors
+        let errors = [];
+
+        //id's van de velden
+        let veld = ["#Voornaam", "#Achternaam", "#Email", "#Gebruikersnaam", "#Wachtwoord", "#HerhaalWachtwoord", "#adres", "#Postcode"];
+
+        //invullen meldingen
+        let melding = [];
+        for (i = 0; i < 8; i++) {
+          melding.push("Het veld " + veld[i] + "is vereist.")
+        }
+
+        function checkEmptyField(veld, melding) {
+            for (i = 0; i < 8; i++) {
+                if (veld[i].textContent == "") {
+                    errors.push(melding[i])
+                }
+            }
+        }
+
+        //Controle velden
+        function validateForm() {
+
+            checkEmptyField(veld, melding);
+
+          if (errors.length > 0) {
+            ToonErrors(errors);
+          } else {
+            // Submit form
+            alert("Je bent succesvol geregistreerd!")
+          }
+
+        }
+
+        //knop.addEventListener('click', validateForm, false);
+
+        function ToonErrors(errors) {
+          alert(errors);
+        }
+    </script>
 </body>
 </html>
