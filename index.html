@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form validation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="blad">
+        <div class="head">
+            <h1>Registreer je hier!</h1>
+            <p>Meld je aan bij bakkerij Het Gebakje en ontvang mails over het laatste nieuws en de nieuwe gebakjes!</p>
+        </div>
+        <form class="form">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Voornaam</label>
+                    <input type="name" class="form-control" id="Voornaam" placeholder="John">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Achternaam</label>
+                    <input type="name" class="form-control" id="Achternaam" placeholder="Doe">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-label">Email adres</label>
+                    <input type="name" class="form-control" id="Email" placeholder="JouwEmail@email.com">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="form-label">Gebruikersnaam</label>
+                    <input type="name" class="form-control" id="Gebruikersnaam">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label"> Wachtwoord</label>
+                    <input type="name" class="form-control" id="HerhaalWachtwoord">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Herhaal wachtwoord</label>
+                    <input type="name" class="form-control" id="HerhaalWachtwoord">
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-label">Thuis adres</label>
+                    <input type="name" class="form-control" id="adres">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="inputState" class="form-label">Land</label>
+                    <select id="inputState" class="form-select">
+                      <option selected>Kies...</option>
+                      <option value="1">België</option>
+                      <option value="2">Nederland</option>
+                      <option value="3">Frankrijk</option>
+                      <option value="4">Duitsland</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputState" class="form-label">Provincie</label>
+                    <select id="inputState" class="form-select">
+                      <option selected>Kies...</option>
+                      <option value="1">Antwerpen</option>
+                      <option value="2">Limburg</option>
+                      <option value="3">West-Vlaanderen</option>
+                      <option value="4">Oost-Vlaanderen</option>
+                    </select>
+                  </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">   
+                    <p style="padding-top: 5px;">Kies hier welke emails en nieuwsberichten u wilt ontvangen. Check de box "Op papier" als je alles ook op papier wilt ontvangen.</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <label class="form-check-label" for="gridCheck">
+                          Op papier
+                        </label>
+                      </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputState" class="form-label">Kies een optie</label>
+                    <select id="inputState" class="form-select">
+                      <option selected>Kies...</option>
+                      <option value="1">Bakkerij nieuws</option>
+                      <option value="2">Nieuwe gebakjes</option>
+                      <option value="3">Nieuws van het drop</option>
+                      <option value="4">Evenementen</option>
+                      <option value="5">Alles</option>
+                    </select>
+                  </div>
+            </div>
+
+            <div class="row">
+                <button type="submit" class="btn1">Submit</button>
+            </div>
+          </form>
+    </div>
+</body>
+</html>
