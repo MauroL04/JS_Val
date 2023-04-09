@@ -14,6 +14,19 @@
             <h1>Registreer je hier!</h1>
             <p>Meld je aan bij bakkerij Het Gebakje en ontvang mails over het laatste nieuws en de nieuwe gebakjes!</p>
         </div>
+        <div id="G" style="display: none;">
+            <div  class="GeluktAlert">
+                <h6>Gelukt! Je bent geregistreerd!</h6>
+            </div>
+            <div class="banking">   
+                <h6>Betaalmethode</h6>
+                <p id="BM">Geen betaalmethode</p>
+            </div>
+        </div>
+        <div id="F" style="display: none;" class="FoutAlert">
+            <h6>Oeps! Er is iets mis gegaan!</h6>
+            <p id="ErrorP"></p>
+        </div>
         <form class="form">
             <div class="row">
                 <div class="col-md-6">
@@ -62,8 +75,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="inputState" class="form-label">Land</label>
-                    <select id="inputState" class="form-select">
-                      <option selected>Kies...</option>
+                    <select id="Land" class="form-select">
+                      <option value="0" selected>Kies...</option>
                       <option value="1">België</option>
                       <option value="2">Nederland</option>
                       <option value="3">Frankrijk</option>
@@ -72,8 +85,8 @@
                   </div>
                   <div class="col-md-6">
                     <label for="inputState" class="form-label">Provincie</label>
-                    <select id="inputState" class="form-select">
-                      <option selected>Kies...</option>
+                    <select id="Provincie" class="form-select">
+                      <option value="0" selected>Kies...</option>
                       <option value="1">Antwerpen</option>
                       <option value="2">Limburg</option>
                       <option value="3">West-Vlaanderen</option>
@@ -93,9 +106,9 @@
                       </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="inputState" class="form-label">Kies een optie</label>
+                    <label for="inputState" class="form-label">Nieuwsonderwerpen</label>
                     <select id="inputState" class="form-select">
-                      <option selected>Kies...</option>
+                      <option value="0" selected>Kies...</option>
                       <option value="1">Bakkerij nieuws</option>
                       <option value="2">Nieuwe gebakjes</option>
                       <option value="3">Nieuws van het drop</option>
@@ -106,54 +119,196 @@
             </div>
 
             <div class="row">
-                <button type="submit" class="btn1">Submit</button>
+                <div class="col-md-8">
+                    <label for="inputState" class="form-label">Kies een betaalmethode</label>
+                    <select id="inputState" class="form-select">
+                      <option value="0" selected>Kies...</option>
+                      <option value="1">Banking app</option>
+                      <option value="2">Overschrijving</option>
+                      <option value="3">Visa</option>
+                      <option value="4">Paypal</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="VW">
+                        <label class="form-check-label" for="gridCheck">
+                          Algemene voorwaarden
+                        </label>
+                      </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <button type="submit" id="btn1" class="btn1">Submit</button>
             </div>
           </form>
     </div>
 
-    <script>
+<script>
+    window.onload = function() {
         //de submit knop
-        const knop = document.getElementById('btn1');
+        const knop = document.querySelector("#btn1");
 
         //lijst met errors
         let errors = [];
 
         //id's van de velden
-        let veld = ["#Voornaam", "#Achternaam", "#Email", "#Gebruikersnaam", "#Wachtwoord", "#HerhaalWachtwoord", "#adres", "#Postcode"];
+        let veld = ["#Voornaam", "#Achternaam", "#Gebruikersnaam", "#adres", "#Land", "#Provincie", "#Postcode"];
 
         //invullen meldingen
         let melding = [];
-        for (i = 0; i < 8; i++) {
-          melding.push("Het veld " + veld[i] + "is vereist.")
+        for (i = 0; i < 6; i++) {
+          melding.push("Het veld " + document.querySelector(veld[i]).value + " is vereist.")
         }
 
+//alert fucnties
+        //laat het alert zien
+        function showAlert(alertId) {
+            const alrt = document.getElementById(alertId);
+            if(alrt != null){
+                document.getElementById(alertId).style.display = "block";
+            }
+            if(alrt === "F"){
+                for(let i; i < errors.length; i++){
+                    document.getElementById(ErrorP).innerHTML += errors[i];
+                }
+            }
+		}
+
+		//verbergt alert
+		function hideAlert(alertId) {
+            const alrt = document.getElementById(alertId);
+            if(alrt != null){
+			document.getElementById(alertId).style.display = "none";
+            document.getElementById(ErrorP).innerHTML = "";
+            document.querySelector("#BM").innerHTML = "";
+            }
+		}
+
+        //checked en vult payment alert in
+        function validatePayment(veld){
+            if (document.querySelector(veld).value != 0){
+                document.querySelector("#BM").innerHTML = document.querySelector(veld + " span").textContent;
+            }
+        }
+//Functies
+        //functie lege velden
         function checkEmptyField(veld, melding) {
-            for (i = 0; i < 8; i++) {
-                if (veld[i].textContent == "") {
-                    errors.push(melding[i])
+            for (i = 0; i < 6; i++) {
+                if (document.querySelector(veld[i]).value === ""|0){
+                    errors.push(melding[i]);
                 }
             }
         }
 
+        //functie controle email
+        function validateEmail(email) {
+            const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            //google: "how to check if an email is correct with js, https://www.simplilearn.com/tutorials/javascript-tutorial/email-validation-in-javascript"
+            if(pattern.test(email) == false){
+            }
+            return false;
+        }
+        //kijkt domein na van email
+        function validateDomain(domain) {
+            const firstChar = domain.charAt(0);
+            //moet starten met letter of nummer
+            if (!firstChar.match(/[a-zA-Z0-9]/)) {
+                errors.push("Domeinnaam moet beginnen met een letter of een nummer.")
+            }
+            //mag punten en koppeltekens bevatten als extra characters.
+            const pattern = /^[a-zA-Z0-9.-]+$/;
+            if (!pattern.test(domain)) {
+                errors.push("Domeinnaam mag alleen letters, nummers, punten en koppeltekens bevatten.")
+            }
+        }
+
+        //funtie controleer wachtwoorden
+        function checkWachtwoord(wachtwoord1, wachtwoord2){
+            //kijkt of beide zijn ingevuld
+            if(wachtwoord1 == "" || wachtwoord2 == ""){
+                errors.push("Vul beide wachtwoordvelden in.");
+            }
+            //kijkt of ze lang genoeg zijn
+            if(wachtwoord1.length < 8){
+                errors.push("Wachtwoord moet minstens 8 karakters lang zijn.");
+            }
+            //kijkt of ze gelijk zijn aan elkaar
+            if(wachtwoord1 === wachtwoord2){
+                errors.push("Wachtwoorden komen niet overeen.");
+            }
+        }
+
+        //Check gebruikersnaam
+        function checkGebruikersnaam(){
+            //kijkt of gebruikersnaam lang genoeg is
+            if((document.querySelector("#Gebruikersnaam").value).length < 1){
+                errors.push("Een gebruikersnaam moet minimum 1 karakter lang zijn.");
+            }
+            //kijkt of gebruikersnaam geen verkeerde symbolen gebruikt
+            const pattern = /^[a-zA-Z0-9_]+([-_.]?[a-zA-Z0-9_]+)*$/;
+            if (!pattern.test(document.querySelector("#Gebruikersnaam").value)) {
+                errors.push("Een gebruikersnaam mag alleen letters, nummers of underscores bevatten.");
+            }
+            //kijkt of gebruikersnaam juist begint
+            if ((document.querySelector("#Gebruikersnaam").value).charAt(0) === '.' || (document.querySelector("#Gebruikersnaam").value).charAt(0) === '-'){
+                errors.push("Een gebruikersnaam mag niet beginnen met een ' . ' of een ' - '.")
+            }
+        }
+
+        //controleerd postcode
+        function checkPC(){
+            var postcodeNum = parseInt(document.querySelector("#Postcode").value);
+            if (isNaN(postcodeNum)){
+            } 
+            else{
+                let correct = (postcodeNum >= 1000 && postcodeNum <= 9999);
+                if(correct != true){
+                    errors.push("Dit is geen geldige postcode.")
+                }
+            }        
+        }
+
+        //Algemene voorwaarden
+        function checkVW(){
+            const vw = document.querySelector("#VW");
+            if(vw.checked == false){
+                errors.push("Accepteerd de algemene voorwaarden.")
+            }
+        }
+
+        //functie toon alle errors
+        function ToonErrors(errors){
+          showAlert(F)
+        }
+
+
         //Controle velden
         function validateForm() {
-
+            //functies oproepen
             checkEmptyField(veld, melding);
+            checkWachtwoord(document.querySelector("#Wachtwoord").value, document.querySelector("#HerhaalWachtwoord").value);
+            if(validateEmail(document.querySelector("#Email").value)==false){
+                errors.push("E-mail aders is niet correct.");
+            }
+            checkGebruikersnaam();
+            checkPC();
 
-          if (errors.length > 0) {
-            ToonErrors(errors);
-          } else {
-            // Submit form
-            alert("Je bent succesvol geregistreerd!")
-          }
 
+            //Toon alle errors
+            if (errors.length > 0) {
+                ToonErrors(errors);
+            } else {
+                // Submit form
+                document.querySelector("form").submit();
+                showAlert(G);
+            }
         }
 
-        //knop.addEventListener('click', validateForm, false);
-
-        function ToonErrors(errors) {
-          alert(errors);
-        }
-    </script>
+        //knop triggered functie validateform 
+        knop.addEventListener('click', validateForm(), false);
+    }  
+</script>
 </body>
 </html>
